@@ -1,0 +1,56 @@
+{% extends "login/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="p10 mb-20 alert-info">
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a> |
+            <a href="{{ path('homepage') }}">
+                Accueil
+            </a>
+        </div>
+    {% endif %}
+    <form action="{{ path("fos_user_security_check") }}" class="login100-form validate-form flex-sb flex-w" method="POST">
+        <span class="login100-form-title p-b-51">
+            Se connecter
+        </span>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+        <div class="wrap-input100 validate-input m-b-16" data-validate="Le nom d'utilisateur est obligatoire">
+            <input class="input100" type="text" id="username" name="_username"
+                   value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}">
+            <span class="focus-input100"></span>
+        </div>
+
+
+        <div class="wrap-input100 validate-input m-b-16" data-validate="Le mot de passe est obligatoire">
+            <input class="input100" type="password" id="password" name="_password"
+                   placeholder="{{ 'security.login.password'|trans }}">
+            <span class="focus-input100"></span>
+        </div>
+
+        <div class="flex-sb-m w-full p-t-3 p-b-24">
+            <div class="contact100-form-checkbox">
+                <input class="input-checkbox100" type="checkbox" id="remember_me" name="_remember_me">
+                <label class="label-checkbox100" for="remember_me">
+                    Se souvenir de moi
+                </label>
+            </div>
+        </div>
+
+        <div class="container-login100-form-btn m-t-17">
+            <button type="submit" class="login100-form-btn" id="_submit" name="_submit" value="Se connecter">
+                Se connecter
+            </button>
+        </div>
+    </form>
+{% endblock fos_user_content %}

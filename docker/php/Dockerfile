@@ -22,6 +22,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 WORKDIR /usr/src/app
 
+COPY ./php.ini /usr/local/etc/php
 COPY apps/bracelet /usr/src/app
 RUN chown -R www-data:www-data /usr/src/app/var
 
