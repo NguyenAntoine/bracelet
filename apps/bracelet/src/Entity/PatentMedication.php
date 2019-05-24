@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PatentMedicationRepository")
  */
-class   PatentMedication
+class PatentMedication
 {
     use Timestamp;
 
@@ -18,6 +18,7 @@ class   PatentMedication
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Exclude()
      */
     private $id;
 
@@ -70,21 +71,20 @@ class   PatentMedication
     private $per_month;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Patent", mappedBy="medication")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Drug", inversedBy="patents")
+     * @JMS\Type("App\Entity\Drug")
+     */
+    private $drug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PatentsWithMedications", mappedBy="patent_medication", orphanRemoval=true)
      * @JMS\Exclude()
      */
     private $patents;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Drug", mappedBy="patents")
-     * @JMS\Type("array<App\Entity\Drug>")
-     */
-    private $drugs;
-
     public function __construct()
     {
         $this->patents = new ArrayCollection();
-        $this->drugs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,61 +189,45 @@ class   PatentMedication
     }
 
     /**
-     * @return Collection|Patent[]
+     * @return Collection|Drug[]
+     */
+    public function getDrug(): Collection
+    {
+        return $this->drug;
+    }
+
+    public function setDrug(Drug $drug): self
+    {
+        $this->drug = $drug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PatentsWithMedications[]
      */
     public function getPatents(): Collection
     {
         return $this->patents;
     }
 
-    public function addPatent(Patent $patent): self
+    public function addPatent(PatentsWithMedications $patent): self
     {
         if (!$this->patents->contains($patent)) {
             $this->patents[] = $patent;
-            $patent->setMedication($this);
+            $patent->setPatentMedication($this);
         }
 
         return $this;
     }
 
-    public function removePatent(Patent $patent): self
+    public function removePatent(PatentsWithMedications $patent): self
     {
         if ($this->patents->contains($patent)) {
             $this->patents->removeElement($patent);
             // set the owning side to null (unless already changed)
-            if ($patent->getMedication() === $this) {
-                $patent->setMedication(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Drug[]
-     */
-    public function getDrugs(): Collection
-    {
-        return $this->drugs;
-    }
-
-    public function addDrug(Drug $drug): self
-    {
-        if (!$this->drugs->contains($drug)) {
-            $this->drugs[] = $drug;
-            $drug->setPatents($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDrug(Drug $drug): self
-    {
-        if ($this->drugs->contains($drug)) {
-            $this->drugs->removeElement($drug);
-            // set the owning side to null (unless already changed)
-            if ($drug->getPatents() === $this) {
-                $drug->setPatents(null);
+            if ($patent->getPatentMedication() === $this) {
+                $patent->setPatentMedication(null);
             }
         }
 

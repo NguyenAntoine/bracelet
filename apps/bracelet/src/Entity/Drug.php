@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -16,6 +18,7 @@ class Drug
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Exclude()
      */
     private $id;
 
@@ -44,10 +47,18 @@ class Drug
     private $injection_type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PatentMedication", inversedBy="drugs")
+     * @ORM\OneToMany(targetEntity="App\Entity\PatentMedication", mappedBy="drug")
      * @JMS\Exclude()
      */
     private $patents;
+
+    /**
+     * Drug constructor.
+     */
+    public function __construct()
+    {
+        $this->patents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,14 +113,33 @@ class Drug
         return $this;
     }
 
-    public function getPatents(): ?PatentMedication
+    /**
+     * @return Collection|PatentMedication[]
+     */
+    public function getPatents(): Collection
     {
         return $this->patents;
     }
 
-    public function setPatents(?PatentMedication $patents): self
+    public function addPatent(PatentMedication $patent): self
     {
-        $this->patents = $patents;
+        if (!$this->patents->contains($patent)) {
+            $this->patents[] = $patent;
+            $patent->setDrug($this);
+        }
+
+        return $this;
+    }
+
+    public function removePatent(PatentMedication $patent): self
+    {
+        if ($this->patents->contains($patent)) {
+            $this->patents->removeElement($patent);
+            // set the owning side to null (unless already changed)
+            if ($patent->getDrug() === $this) {
+                $patent->setDrug(null);
+            }
+        }
 
         return $this;
     }

@@ -9,7 +9,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api:
-            provider:  fos_userbundle
+#            provider:  fos_userbundle
             pattern:   ^/api
             stateless: true
             anonymous: true

@@ -4,11 +4,13 @@ namespace App\DataFixtures;
 
 use App\Entity\Drug;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class DrugFixtures extends Fixture implements DependentFixtureInterface
+class DrugFixtures extends Fixture
 {
+    const DRUG_1 = 'drug-1';
+    const DRUG_2 = 'drug-2';
+
     /**
      * {@inheritDoc}
      */
@@ -26,10 +28,6 @@ class DrugFixtures extends Fixture implements DependentFixtureInterface
             $parts = array(implode(',', $parts), $last);
 
             $drug = new Drug();
-
-            if ($i === 25) {
-                $drug->setPatents($this->getReference(PatentMedicationFixtures::PATENT_MEDICATION_1));
-            }
 
             $nameAndNo = $parts[0];
             $part = explode('	', $nameAndNo);
@@ -57,20 +55,17 @@ class DrugFixtures extends Fixture implements DependentFixtureInterface
                 $way = $part[2];
                 $drug->setInjectionType($way);
             }
+
+            if ($i === 25) {
+                $this->setReference(self::DRUG_1, $drug);
+            } elseif ($i === 42) {
+                $this->setReference(self::DRUG_2, $drug);
+            }
+
             $manager->persist($drug);
             $i++;
         }
         $manager->flush();
         ini_set('memory_limit','256M');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDependencies()
-    {
-        return [
-            PatentMedicationFixtures::class,
-        ];
     }
 }

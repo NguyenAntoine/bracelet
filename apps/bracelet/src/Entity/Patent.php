@@ -18,6 +18,7 @@ class Patent
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Exclude()
      */
     private $id;
 
@@ -40,15 +41,20 @@ class Patent
     private $diseases;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PatentMedication", inversedBy="patents")
-     * @ORM\JoinColumn(nullable=false)
-     * @JMS\Type("array<App\Entity\PatentMedication>")
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\PatentsWithMedications",
+     *     mappedBy="patent",
+     *     orphanRemoval=true,
+     *     cascade={"all"}
+     * )
+     * @JMS\Type("App\Entity\PatentsWithMedications")
      */
-    private $medication;
+    private $medications;
 
     public function __construct()
     {
         $this->diseases = new ArrayCollection();
+        $this->medications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,14 +112,33 @@ class Patent
         return $this;
     }
 
-    public function getMedication(): ?PatentMedication
+    /**
+     * @return Collection|PatentsWithMedications[]
+     */
+    public function getMedications(): Collection
     {
-        return $this->medication;
+        return $this->medications;
     }
 
-    public function setMedication(?PatentMedication $medication): self
+    public function addMedication(PatentsWithMedications $medication): self
     {
-        $this->medication = $medication;
+        if (!$this->medications->contains($medication)) {
+            $this->medications[] = $medication;
+            $medication->setPatent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedication(PatentsWithMedications $medication): self
+    {
+        if ($this->medications->contains($medication)) {
+            $this->medications->removeElement($medication);
+            // set the owning side to null (unless already changed)
+            if ($medication->getPatent() === $this) {
+                $medication->setPatent(null);
+            }
+        }
 
         return $this;
     }
