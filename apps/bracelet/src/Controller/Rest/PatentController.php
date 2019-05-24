@@ -11,6 +11,7 @@ use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
+use Mailjet\Resources;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twilio\Rest\Client;
@@ -38,7 +39,7 @@ class PatentController extends AbstractFOSRestController
      * @param PatentMedication $medication
      * @param EntityManagerInterface $em
      * @param SerializerInterface $serializer
-     * @param Client $twilio
+     * @param Client $client
      * @param bool $taken
      * @return JsonResponse
      * @throws Exception
@@ -47,7 +48,7 @@ class PatentController extends AbstractFOSRestController
         PatentMedication $medication,
         EntityManagerInterface $em,
         SerializerInterface $serializer,
-        Client $twilio,
+        Client $client,
         $taken = true
     )
     {
@@ -61,18 +62,50 @@ class PatentController extends AbstractFOSRestController
         $em->flush();
 
         if (!$taken) {
-            // Send SMS
-            $twilio->messages->create(
-                '+33610762702',
+            $message = 'Bonjour, ' .
+                $medication->getPatent()->getPatent()->getFullName() .
+                ' n\'a pas pris son médicament ' .
+                $medication->getDrug()->getName() .
+                ' aujourd\'hui à ' . $date->format('H:i');
+
+            // Send SMS with Twilio
+            $client->messages->create(
+                getenv('TWILIO_PHONENUMBER_DEMO'),
                 [
                     'from' => getenv('TWILIO_PHONENUMBER'),
-                    'body' => 'Bonjour, ' .
-                        $medication->getPatent()->getPatent()->getFullName() .
-                        ' n\'a pas pris son médicament ' .
-                        $medication->getDrug()->getName() .
-                        ' aujourd\'hui à ' . $date->format('H:i')
+                    'body' => $message
                 ]
             );
+
+            // Send email with Mailjet
+            $body = [
+                'Messages' => [
+                    [
+                        'From' => [
+                            'Email' => getenv('MAILJET_EMAIL_DEMO'),
+                            'Name' => getenv('MAILJET_EMAIL_DEMO'),
+                        ],
+                        'To' => [
+                            [
+                                'Email' => 'antoine.ngu@outlook.fr',
+                                'Name' => 'Antoine Nguyen',
+                            ]
+                        ],
+                        'Subject' => '[iBracelet] Urgent : Oubli de médicament',
+                        'TextPart' => $message,
+                        'HTMLPart' => $this->render('email/medication_not_taken.html.twig', [
+                            'medication' => $medication
+                        ]),
+                    ]
+                ],
+            ];
+            $mailjetClient = new \Mailjet\Client(
+                getenv('MAILJET_APIKEY_PUBLIC'),
+                getenv('MAILJET_APIKEY_PRIVATE'),
+                true,
+                ['version' => 'v3.1']
+            );
+            $mailjetClient->post(Resources::$Email, ['body' => $body]);
         }
 
         return JsonResponse::fromJsonString($serializer->serialize($medicationTaken, 'json'), Response::HTTP_CREATED);
