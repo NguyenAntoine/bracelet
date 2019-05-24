@@ -541,6 +541,9 @@
     "twig/twig": {
         "version": "v2.8.1"
     },
+    "twilio/sdk": {
+        "version": "5.32.0"
+    },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
     },

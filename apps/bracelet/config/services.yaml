@@ -31,3 +31,8 @@ services:
     App\Subscriber\EntitySubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    Twilio\Rest\Client:
+        arguments:
+            - '%env(TWILIO_SID)%'
+            - '%env(TWILIO_TOKEN)%'

@@ -184,9 +184,9 @@ class PatentMedication
     }
 
     /**
-     * @return Collection|Drug[]
+     * @return Drug
      */
-    public function getDrug(): Collection
+    public function getDrug(): Drug
     {
         return $this->drug;
     }

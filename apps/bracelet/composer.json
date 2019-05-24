@@ -18,7 +18,8 @@
         "symfony/translation": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/webpack-encore-bundle": "^1.5",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "twilio/sdk": "^5.32"
     },
     "config": {
         "preferred-install": {
