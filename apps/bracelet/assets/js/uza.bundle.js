@@ -148,7 +148,7 @@
 }(jQuery));
 
 /**
- * Owl Carousel v2.2.1
+ * owl.carousel v2.2.1
  * Copyright 2013-2017 Saurabh Sharma
  * Licensed under  ()
  */

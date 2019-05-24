@@ -1,5 +1,34 @@
+import './classyNav';
+import 'owl.carousel';
+import './wow';
 import 'animate.css';
-import WOW from 'wowjs';
+import 'magnific-popup';
+import 'jquery-waypoints/waypoints.min';
+import 'jquery.counterup';
+import 'imagesloaded';
+import 'isotope-layout';
+import 'jarallax';
+import 'scrollup/dist/jquery.scrollUp.min';
+
+(function () {
+  var method;
+  var noop = function noop() {};
+  var methods = [
+    'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+    'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+    'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+    'timeStamp', 'trace', 'warn'
+  ];
+  var length = methods.length;
+  var console = (window.console = window.console || {});
+  while (length--) {
+    method = methods[length];
+    // Only stub undefined methods.
+    if (!console[method]) {
+      console[method] = noop;
+    }
+  }
+}());
 
 (function ($) {
   'use strict';
@@ -183,13 +212,6 @@ import WOW from 'wowjs';
   // ***************************
   if ($.fn.tooltip) {
     $('[data-toggle="tooltip"]').tooltip();
-  }
-
-  // ***********************
-  // :: 11.0 WOW Active Code
-  // ***********************
-  if (uza_window.width() > 767) {
-    new WOW().init();
   }
 
   // ****************************

@@ -40,8 +40,7 @@ import $ from 'jquery';
 import 'popper.js';
 import 'bootstrap';
 import 'select2';
-import './uza.bundle';
-import './active';
+import './active.js';
 
 $(document).ready(function () {
   $('.select2').select2();

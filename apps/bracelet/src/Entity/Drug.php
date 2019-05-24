@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DrugRepository")
@@ -20,26 +21,31 @@ class Drug
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Type("string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     private $no_drug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     private $injection_type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PatentMedication", inversedBy="drugs")
+     * @JMS\Exclude()
      */
     private $patents;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DiseaseRepository")
@@ -20,11 +21,13 @@ class Disease
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Type("string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @JMS\Type("boolean")
      */
     private $chronically;
 

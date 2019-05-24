@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PatentMedicationRepository")
@@ -22,51 +23,61 @@ class   PatentMedication
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     private $schedule;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     private $meal_period;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Type("integer")
      */
     private $number;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Type("integer")
      */
     private $weeks_duration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Type("integer")
      */
     private $months_duration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Type("integer")
      */
     private $per_day;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Type("integer")
      */
     private $per_week;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Type("integer")
      */
     private $per_month;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Patent", mappedBy="medication")
+     * @JMS\Exclude()
      */
     private $patents;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Drug", mappedBy="patents")
+     * @JMS\Type("array<App\Entity\Drug>")
      */
     private $drugs;
 
