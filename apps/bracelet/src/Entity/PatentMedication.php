@@ -18,7 +18,7 @@ class PatentMedication
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Exclude()
+     * @JMS\Type("integer")
      */
     private $id;
 
@@ -77,15 +77,10 @@ class PatentMedication
     private $drug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PatentsWithMedications", mappedBy="patent_medication", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\PatentsWithMedications", mappedBy="patent_medication")
      * @JMS\Exclude()
      */
-    private $patents;
-
-    public function __construct()
-    {
-        $this->patents = new ArrayCollection();
-    }
+    private $patent;
 
     public function getId(): ?int
     {
@@ -204,32 +199,16 @@ class PatentMedication
     }
 
     /**
-     * @return Collection|PatentsWithMedications[]
+     * @return PatentsWithMedications
      */
-    public function getPatents(): Collection
+    public function getPatent(): ?PatentsWithMedications
     {
-        return $this->patents;
+        return $this->patent;
     }
 
-    public function addPatent(PatentsWithMedications $patent): self
+    public function setPatent(?PatentsWithMedications $patentsWithMedications): self
     {
-        if (!$this->patents->contains($patent)) {
-            $this->patents[] = $patent;
-            $patent->setPatentMedication($this);
-        }
-
-        return $this;
-    }
-
-    public function removePatent(PatentsWithMedications $patent): self
-    {
-        if ($this->patents->contains($patent)) {
-            $this->patents->removeElement($patent);
-            // set the owning side to null (unless already changed)
-            if ($patent->getPatentMedication() === $this) {
-                $patent->setPatentMedication(null);
-            }
-        }
+        $this->patent = $patentsWithMedications;
 
         return $this;
     }

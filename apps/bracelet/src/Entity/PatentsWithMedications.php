@@ -34,7 +34,7 @@ class PatentsWithMedications
     private $patent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PatentMedication", inversedBy="patents")
+     * @ORM\OneToOne(targetEntity="App\Entity\PatentMedication", inversedBy="patent")
      * @ORM\JoinColumn(nullable=false)
      * @JMS\Type("App\Entity\PatentMedication")
      */

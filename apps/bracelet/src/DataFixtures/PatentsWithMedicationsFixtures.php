@@ -10,6 +10,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class PatentsWithMedicationsFixtures extends Fixture implements DependentFixtureInterface
 {
+    const PATENTS_WITH_MEDICATIONS_1 = 'patents-with-medications-1';
+    const PATENTS_WITH_MEDICATIONS_2 = 'patents-with-medications-2';
+
     /**
      * {@inheritDoc}
      */
@@ -19,6 +22,7 @@ class PatentsWithMedicationsFixtures extends Fixture implements DependentFixture
         $patentsWithMedications
             ->setPatent($this->getReference(PatentFixtures::PATENT_1))
             ->setPatentMedication($this->getReference(PatentMedicationFixtures::PATENT_MEDICATION_1));
+        $this->setReference(self::PATENTS_WITH_MEDICATIONS_1, $patentsWithMedications);
 
         $manager->persist($patentsWithMedications);
 
@@ -26,6 +30,7 @@ class PatentsWithMedicationsFixtures extends Fixture implements DependentFixture
         $patentsWithMedications2
             ->setPatent($this->getReference(PatentFixtures::PATENT_1))
             ->setPatentMedication($this->getReference(PatentMedicationFixtures::PATENT_MEDICATION_2));
+        $this->setReference(self::PATENTS_WITH_MEDICATIONS_2, $patentsWithMedications2);
 
         $manager->persist($patentsWithMedications2);
         $manager->flush();
