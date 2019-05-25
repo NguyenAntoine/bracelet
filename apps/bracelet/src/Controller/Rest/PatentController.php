@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\Serializer\ArrayTransformerInterface;
 use JMS\Serializer\SerializerInterface;
 use Mailjet\Resources;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,6 +33,24 @@ class PatentController extends AbstractFOSRestController
     public function getPatentAction(Patent $patent, SerializerInterface $serializer)
     {
         return JsonResponse::fromJsonString($serializer->serialize($patent, 'json'));
+    }
+
+    /**
+     * @Rest\Get("/patent/{id}/medication/taken")
+     * @param Patent $patent
+     * @param ArrayTransformerInterface $serializer
+     * @return JsonResponse
+     */
+    public function getMedicationsTaken(Patent $patent, ArrayTransformerInterface $serializer)
+    {
+        $medicationsTaken = [];
+        $medicationTakenArray = $patent->getMedications();
+
+        foreach ($medicationTakenArray as $patentsWithMedications) {
+            $medicationsTaken[] = $serializer->toArray($patentsWithMedications->getMedicationTaken());
+        }
+
+        return new JsonResponse($medicationsTaken);
     }
 
     /**
