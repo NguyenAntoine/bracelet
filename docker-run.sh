@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-docker-compose down
+docker-compose -f docker-compose-production.yml down
 docker rmi bracelet_php
-docker-compose build
-docker-compose up -f docker-compose-production.yml -d
+docker-compose -f docker-compose-production.yml build
+docker-compose -f docker-compose-production.yml up -d
