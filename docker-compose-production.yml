@@ -2,7 +2,7 @@ version: '3'
 services:
     mysql:
         image: mysql:8
-        restart: on-failure
+        restart: always
         env_file: .env
         command: '--default-authentication-plugin=mysql_native_password'
 #    phpmyadmin:
@@ -15,7 +15,7 @@ services:
 #            - mysql:db
     nginx:
         image: nginx:alpine
-        restart: on-failure
+        restart: always
         env_file: .env
         networks:
             - default
@@ -31,7 +31,7 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - './apps/bracelet/:/usr/src/app'
-        restart: on-failure
+        restart: always
 networks:
     reverse-proxy:
         external:
