@@ -25,6 +25,7 @@ WORKDIR /usr/src/app
 
 COPY docker/php/php.ini /usr/local/etc/php
 COPY apps/bracelet /usr/src/app
+RUN mkdir -p /usr/src/app/var
 RUN chown -R www-data:www-data /usr/src/app/var
 
 RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
