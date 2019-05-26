@@ -28,4 +28,4 @@ COPY apps/bracelet /usr/src/app
 
 RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
 
-CMD ["chown", "-R", "www-data:www-data", "/usr/src/app/var"]
+ENTRYPOINT ["chown", "-R", "www-data:www-data", "/usr/src/app/var"]
