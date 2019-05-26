@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="uza-services-area section-margin-top-80 section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Patients</h2>
+                        <a class="btn" href="{{ path('patent_new') }}"><i class="icon_plus mr-1"></i>Nouveau patient</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Service Area -->
+                <div class="col-12 col-lg-12">
+                    <div class="single-service-area mb-80">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Mails d'urgence</th>
+                                <th>Numéros d'urgence</th>
+                                <th>Créé le</th>
+                                <th>Modifié le</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for patent in patents %}
+                                <tr>
+                                    <td>{{ patent.firstName }}</td>
+                                    <td>{{ patent.lastName }}</td>
+                                    <td>{{ patent.emergencyEmails ? patent.emergencyEmails|join(', ') : '' }}</td>
+                                    <td>{{ patent.emergencyPhoneNumbers ? patent.emergencyPhoneNumbers|join(', ') : '' }}</td>
+                                    <td>{{ patent.createdAt ? patent.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ patent.updatedAt ? patent.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('patent_show', {'id': patent.id}) }}">Détail</a>
+                                        <a href="{{ path('patent_edit', {'id': patent.id}) }}">Modifier</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">Aucun patient trouvé</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

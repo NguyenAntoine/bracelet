@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Patent{% endblock %}
+
+{% block body %}
+    <section class="uza-services-area section-margin-top-80 section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>{{ patent.fullName }}</h2>
+                        <a class="btn" href="{{ path('patent_edit', {'id': patent.id}) }}">
+                            <i class="icon_plus mr-1"></i>Modifier
+                        </a>
+                        {{ include('patent/_delete_form.html.twig') }}
+                        <a class="btn" href="{{ path('patent_index') }}"><i class="icon_menu-circle_alt2"></i> Retour à la liste</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Service Area -->
+                <div class="col-12 col-lg-12">
+                    <div class="single-service-area mb-80">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{{ patent.firstName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ patent.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Mails d'urgence</th>
+                                <td>{{ patent.emergencyEmails ? patent.emergencyEmails|join(', ') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Numéros d'urgence</th>
+                                <td>{{ patent.emergencyPhoneNumbers ? patent.emergencyPhoneNumbers|join(', ') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Créé le</th>
+                                <td>{{ patent.createdAt ? patent.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Modifié le</th>
+                                <td>{{ patent.updatedAt ? patent.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

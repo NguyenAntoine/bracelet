@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Patent{% endblock %}
+
+{% block body %}
+    <section class="uza-services-area section-margin-top-80 section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>{{ patent.fullName }}</h2>
+                        {{ include('patent/_delete_form.html.twig') }}
+                        <a class="btn" href="{{ path('patent_show', {'id': patent.id}) }}">
+                            <i class="icon_menu-circle_alt2"></i> Retour au détail
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Service Area -->
+                <div class="col-12 col-lg-12">
+                    <div class="single-service-area mb-80">
+                        {{ include('patent/_form.html.twig', {'button_label': 'Modifier'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

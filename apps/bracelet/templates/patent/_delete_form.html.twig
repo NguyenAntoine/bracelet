@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('patent_delete', {'id': patent.id}) }}" onsubmit="return confirm('Êtes-vous sûr de supprimer ce patient ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ patent.id) }}">
+    <button class="btn"><i class="icon_minus-06"></i> Supprimer</button>
+</form>

@@ -40,6 +40,7 @@ import $ from 'jquery';
 import 'popper.js';
 import 'bootstrap';
 import 'select2';
+import '@fortawesome/fontawesome-free/js/all.min';
 import './active.js';
 
 $(document).ready(function () {
