@@ -32,7 +32,7 @@ services:
         volumes:
             - './apps/bracelet/:/usr/src/app'
         entrypoint: /usr/src/run_symfony_commands.sh
-        restart: always
+        restart: on-failure
 networks:
     reverse-proxy:
         external:
