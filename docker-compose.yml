@@ -35,8 +35,6 @@ services:
             - './apps/bracelet/:/usr/src/app'
         entrypoint: /usr/src/run_symfony_commands.sh
         restart: on-failure
-        depends_on:
-            - mysql
 networks:
     reverse-proxy:
         external:
