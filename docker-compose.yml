@@ -33,6 +33,7 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - './apps/bracelet/:/usr/src/app'
+        entrypoint: php/run_symfony_commands.sh
         restart: on-failure
 networks:
     reverse-proxy:

@@ -31,11 +31,7 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - './apps/bracelet/:/usr/src/app'
-        entrypoint:
-            - chown
-            - -R
-            - www-data:www-data
-            - /usr/src/app/var
+        entrypoint: php/run_symfony_commands.sh
         restart: always
 networks:
     reverse-proxy:
