@@ -35,6 +35,16 @@ class Patent
     private $last_name;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $emergencyEmails = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $emergencyPhoneNumbers = [];
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Disease")
      * @JMS\Exclude()
      */
@@ -87,6 +97,30 @@ class Patent
     public function setLastName(string $last_name): self
     {
         $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    public function getEmergencyEmails(): ?array
+    {
+        return $this->emergencyEmails;
+    }
+
+    public function setEmergencyEmails(?array $emergencyEmails): self
+    {
+        $this->emergencyEmails = $emergencyEmails;
+
+        return $this;
+    }
+
+    public function getEmergencyPhoneNumbers(): ?array
+    {
+        return $this->emergencyPhoneNumbers;
+    }
+
+    public function setEmergencyPhoneNumbers(?array $emergencyPhoneNumbers): self
+    {
+        $this->emergencyPhoneNumbers = $emergencyPhoneNumbers;
 
         return $this;
     }

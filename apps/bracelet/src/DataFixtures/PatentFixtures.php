@@ -20,6 +20,8 @@ class PatentFixtures extends Fixture implements DependentFixtureInterface
         $patent
             ->setFirstName('Robert')
             ->setLastName('Michel')
+            ->setEmergencyEmails(['antoine.ngu@outlook.fr'])
+            ->setEmergencyPhoneNumbers(['+33610762702'])
             ->addDisease($this->getReference(DiseaseFixtures::DISEASE_1));
 
         $this->setReference(self::PATENT_1, $patent);
