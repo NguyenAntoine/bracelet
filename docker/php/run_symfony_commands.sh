@@ -2,4 +2,4 @@
 set -e
 chown -R www-data:www-data /usr/src/app/var
 /usr/src/app/bin/console doctrine:migrations:migrate -n
-exit 0
+/usr/src/app/bin/console doctrine:fixtures:load -n

@@ -34,3 +34,5 @@ yarn build
 # run script docker for windows environment
 .\docker-run.bat
 ```
+
+Don't forget to run the commands in this script [run_symfony_commands.sh](/docker/php/run_symfony_commands.sh)
