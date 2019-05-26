@@ -17,7 +17,7 @@ class DrugFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         ini_set('memory_limit','-1');
-        $file = file_get_contents(__DIR__ . "/cis.txt");
+        $file = file_get_contents(__DIR__ . "/drugs.txt");
 
         $lines = explode("\n", $file);
         $i = 0;
@@ -63,9 +63,15 @@ class DrugFixtures extends Fixture
             }
 
             $manager->persist($drug);
+
+            if ($i % 25 === 0) {
+                $manager->flush();
+                $manager->clear();
+            }
             $i++;
         }
         $manager->flush();
+        $manager->clear();
         ini_set('memory_limit','256M');
     }
 }

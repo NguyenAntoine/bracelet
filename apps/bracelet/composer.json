@@ -20,7 +20,8 @@
         "symfony/validator": "4.2.*",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "4.2.*",
-        "twilio/sdk": "^5.32"
+        "twilio/sdk": "^5.32",
+        "ext-json": "*"
     },
     "config": {
         "preferred-install": {
