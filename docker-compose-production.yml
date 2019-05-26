@@ -31,6 +31,11 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - './apps/bracelet/:/usr/src/app'
+        entrypoint:
+            - chown
+            - -R
+            - www-data:www-data
+            - /usr/src/app/var
         restart: always
 networks:
     reverse-proxy:
