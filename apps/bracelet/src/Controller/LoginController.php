@@ -19,8 +19,8 @@ class LoginController extends AbstractFOSRestController
      */
     public function loginRedirectAction()
     {
-        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-            return $this->redirectToRoute('homepage');
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('patent_index');
         } else {
             return $this->redirectToRoute('fos_user_security_login');
         }

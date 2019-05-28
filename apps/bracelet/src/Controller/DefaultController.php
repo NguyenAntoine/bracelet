@@ -20,6 +20,7 @@ class DefaultController extends AbstractController
      */
     public function home()
     {
-        return $this->render('home/home.html.twig');
+        return $this->redirectToRoute('patent_index');
+//        return $this->render('home/home.html.twig');
     }
 }
