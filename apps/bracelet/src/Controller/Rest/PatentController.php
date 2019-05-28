@@ -110,7 +110,7 @@ class PatentController extends AbstractFOSRestController
                                 'Name' => 'Antoine Nguyen',
                             ]
                         ],
-                        'Subject' => '[iBracelet] Urgent : Oubli de médicament',
+                        'Subject' => '[Observant] Urgent : Oubli de médicament',
                         'TextPart' => $message,
                         'HTMLPart' => $this->render('email/medication_not_taken.html.twig', [
                             'medication' => $medication
