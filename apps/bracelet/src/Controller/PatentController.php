@@ -65,6 +65,18 @@ class PatentController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/history", name="patent_show_history", methods={"GET"})
+     * @param Patent $patent
+     * @return Response
+     */
+    public function showHistory(Patent $patent): Response
+    {
+        return $this->render('patent/show_history.html.twig', [
+            'patent' => $patent,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="patent_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Patent $patent

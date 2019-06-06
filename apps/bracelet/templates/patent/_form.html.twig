@@ -1,4 +1,12 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.first_name) }}
+    {{ form_row(form.last_name) }}
+    {{ form_row(form.emergencyEmails) }}
+    {{ form_row(form.emergencyPhoneNumbers) }}
+    <ul class="medications list-group" data-prototype="{{ form_widget(form.medications.vars.prototype)|e('html_attr') }}">
+        {% for medication in form.medications %}
+            <li>{{ form_row(medication.patentMedication) }}</li>
+        {% endfor %}
+    </ul>
     <button class="btn">{{ button_label|default('Valider') }}</button>
 {{ form_end(form) }}

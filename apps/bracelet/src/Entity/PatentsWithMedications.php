@@ -42,7 +42,7 @@ class PatentsWithMedications
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\MedicationTaken", inversedBy="patentsWithMedications")
-     * @ORM\OrderBy({"taken_at" = "ASC"})
+     * @ORM\OrderBy({"taken_at" = "DESC"})
      * @JMS\Exclude()
      */
     private $medication_taken;

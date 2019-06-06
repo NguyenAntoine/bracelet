@@ -40,6 +40,7 @@
                                     <td>{{ patent.updatedAt ? patent.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                                     <td>
                                         <a href="{{ path('patent_show', {'id': patent.id}) }}">Détail</a>
+                                        <a href="{{ path('patent_show_history', {'id': patent.id}) }}">Historique</a>
                                         <a href="{{ path('patent_edit', {'id': patent.id}) }}">Modifier</a>
                                     </td>
                                 </tr>
