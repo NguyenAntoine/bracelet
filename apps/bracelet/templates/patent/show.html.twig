@@ -8,6 +8,7 @@
                 <div class="col-12">
                     <div class="section-heading text-center">
                         <h2>{{ patent.fullName }}</h2>
+                        <h2>Patient atteint de {{ patent.diseases.first.name }}</h2>
                         <a class="btn" href="{{ path('patent_edit', {'id': patent.id}) }}">
                             <i class="icon_plus mr-1"></i>Modifier
                         </a>
