@@ -32,7 +32,7 @@
         "popper.js": "^1.15.0",
         "sass-loader": "^7.1.0",
         "scrollup": "https://github.com/markgoodyear/scrollup",
-        "select2": "^4.0.6-rc.1",
+        "select2": "^4.0.6",
         "wowjs": "^1.1.3"
     }
 }
